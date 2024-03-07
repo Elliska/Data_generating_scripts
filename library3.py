@@ -165,7 +165,7 @@ def generate_age():
 
 def generate_health_and_date():
     # zdravotní stav
-    voluntary = random.choices(['aktivní', 'odešel', 'odejit'], weights = [50,30,20])[0]
+    voluntary = random.choices(['aktivní', 'odešel', 'odejit'], weights = [40,20,20])[0]
     health_limit = random.choices(['A', 'B', 'C', 'D'], weights=[60,20,10,10])[0] # schopen, schopen s výhradou, schopen s omezením, neschopen
     health = fake_cz.random_element(health_limit)
     map_health_spec = {
@@ -187,18 +187,19 @@ def generate_health_and_date():
         legal = fake_cz.random_element([''])
         health_limit = random.choices(['A', 'B'], weights=[70, 30])[0]
     
-    # odešel/odejit a aktivní jsem zcela zástupná hodnota, pouze ke sledování způsobu ukončení, ale nemusí správně reflektovat datum ukončení ke konkrétnímu datu
+    # odešel/odejit a aktivní je zcela zástupná hodnota, pouze ke sledování způsobu ukončení, ale nemusí správně reflektovat datum ukončení ke konkrétnímu datu
     # = nedochází k její aktualizaci
+    # lidi co mají status aktivní, nemusí být reálně k dnešnímu datu ve firmě stále zaměstnáni
 
     # start a end date pracovního úvazku
     if voluntary in ['odešel', 'odejit'] and legal != 've zkušební době':
-        start_date = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 2555))
+        start_date = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 1800))
         # Minimální délka zaměstnání je X měsíce
-        min_days_of_employment = 90
+        min_days_of_employment = 365
         # Náhodně určit délku zaměstnání mezi minimální a maximální
-        employment_duration = random.randint(min_days_of_employment, 730)
+        employment_duration = random.randint(min_days_of_employment, 1095)
         # Určit end_date tak, aby bylo alespoň 2 měsíce před dnešním dnem
-        end_date = datetime(2023, 12, 31) - timedelta(days=min_days_of_employment + random.randint(0, 60))
+        end_date = datetime(2020, 12, 31) - timedelta(days=min_days_of_employment + random.randint(0, 60))
         # Přiřadit hodnotu employment_duration k end_date
         end_date = start_date + timedelta(days=employment_duration)
         # Zajistit, aby end_date nebylo před start_date
@@ -211,14 +212,23 @@ def generate_health_and_date():
         end_date = start_date + timedelta(days=employment_duration)
         end_date = max(end_date, start_date + timedelta(days=7))
     else:
+        start_date = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 2555))
+        min_days_of_employment = 365
+        employment_duration = random.randint(min_days_of_employment, 1095)
+        end_date = datetime.now() + timedelta(days=random.randint(60, 365))
+        end_date = max(end_date, start_date + timedelta(days=60))
+    """
+    else:
         end_date = datetime.now() + timedelta(days=random.randint(60, 365))
         min_days_of_employment = 365
         employment_duration = random.randint(min_days_of_employment, 2000)
         start_date = end_date - timedelta(days=employment_duration)
+    """
 
+    start_date2 = datetime(2014, 1, 1) + timedelta(days=random.randint(1, 365))
+    end_date2 = datetime.now() + timedelta(days=random.randint(60, 365))
 
-
-    return health_limit_spec, health_limit, voluntary, legal, start_date, end_date
+    return health_limit_spec, health_limit, voluntary, legal, start_date, end_date, start_date2, end_date2
 
 def generate_nationality():
     address_parts = random.choice([
@@ -237,7 +247,7 @@ def generate_nationality():
         ])
 
     # Národnost a jazyk
-    nationality = random.choices(['česká', 'slovenská', 'rakouská', 'finská'],weights=[40,15,15,30])[0]
+    nationality = random.choices(['česká', 'slovenská', 'rakouská', 'finská'],weights=[40,10,20,20])[0]
     
 
     map_language_var = {
@@ -339,7 +349,7 @@ def generate_nationality():
         address_psc = fake_at.postcode()
         address_street = f'{fake_at.street_name()} {street_number}'
         address_state = 'Rakouská republika'
-        company_id = random.choices([1,2,5,6], weights=[15,15,60,10])[0]
+        company_id = random.choices([1,2,5,6], weights=[15,10,70,5])[0]
     elif nationality == 'finská':
         email = f'{unidecode(last_name.lower())}.{unidecode(first_name.lower())}@{unidecode(address_parts[1].lower())}.fi'
         phone = fake_fi.phone_number()

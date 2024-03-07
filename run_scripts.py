@@ -16,9 +16,13 @@ cursor = conn.cursor()
 tables_to_drop = [temp_dim_dept, temp_dim_ppl]
 should_drop_table = False
 
+
+should_rewrite_tables_dimPeople = True
+should_rewrite_table_dimDepartment = True
+
 subprocess.run(['python', 'version 3/dimPeople_test.py'])
-#subprocess.run(['python','version 3/dimDepartment_test.py'])
-subprocess.run(['python','version 3/dimDate_test.py']) # způsob zapisování dat do DB je pomalý, možná zkusit upravit
+subprocess.run(['python','version 3/dimDepartment_test.py'])
+#subprocess.run(['python','version 3/dimDate_test.py'])
 subprocess.run(['python','version 3/factPeople_test.py']) 
 
 if should_drop_table:

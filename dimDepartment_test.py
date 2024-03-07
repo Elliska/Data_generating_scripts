@@ -6,10 +6,13 @@
 import random
 import library3 as lib
 import pyodbc
+import run_scripts as rs
 
-seed = 12345
-random.seed(seed)
-#lib = library
+#seed = 12345
+#random.seed(seed)
+
+random.seed()
+
 
 temp_dim_dept, dim_dept, dim_pos, dim_comp, temp_dim_ppl, dim_ppl, dim_date, fact_people = lib.table_names()
 
@@ -46,9 +49,8 @@ END
 
 cursor.execute(create_table_query)
 
-should_update_table = True
 
-if should_update_table:
+if rs.should_rewrite_table_dimDepartment == True:
     drop_table_script = f'DROP TABLE IF EXISTS {temp_dim_dept};'
     cursor.execute(drop_table_script)
     print(f'Tabulka {temp_dim_dept} byla přepsaná.')

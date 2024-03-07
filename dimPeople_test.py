@@ -7,12 +7,15 @@ from faker import Faker
 import random
 #import uuid
 import library3 as lib 
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
+import run_scripts as rs
 
-seed = 12345
-random.seed(seed)
-Faker.seed(seed)
+#seed = 12345
+#random.seed(seed)
+#Faker.seed(seed)
 
+random.seed()
+Faker.seed()
 
 temp_dim_dept, dim_dept, dim_pos, dim_comp, temp_dim_ppl, dim_ppl, dim_date, fact_people = lib.table_names()
 ########### DB connection
@@ -25,13 +28,13 @@ cursor = conn.cursor()
 print('Spojení s DB navázáno')
 
 
-should_update_table = True
+#should_rewrite_tables_dimPeople = True
 
-if should_update_table:
+if rs.should_rewrite_tables_dimPeople == True:
     drop_table_script = f'DROP TABLE IF EXISTS {temp_dim_ppl};'
     cursor.execute(drop_table_script)
 
-if should_update_table == True:
+if rs.should_rewrite_tables_dimPeople == True:
     update_value = 'přepsaná. Data vypsaná znovu.'
 else:
     update_value = 'ponechaná. Data přidaná za existující.'
@@ -99,6 +102,7 @@ people_person = []
 for i in range(ppl):
     #person_id = str(uuid.uuid4())
     nationality, first_language, second_language, first_name, last_name, gender, sex, email, company_id, company_name, ctr, legal, address_street_comp, address_city_comp, address_postal_comp, country, ic, dic, street_number, address_street, address_city, address_psc, phone, address_state, birthdate,age = lib.generate_nationality()
+
     company_name_legal = f'{company_name}-{ctr}, {legal}' 
     #birthdate, age = lib.generate_age()
     health_limit_spec, health_limit, voluntary, legal, start_date, end_date = lib.generate_health_and_date()
@@ -176,20 +180,23 @@ for spec_company_id in range(1,branches+1):
 
         for i in range(1):
             nationality, first_language, second_language, first_name, last_name, gender, sex, email, company_id, company_name, ctr, legal, address_street_comp, address_city_comp, address_postal_comp, country, ic, dic, street_number, address_street, address_city, address_psc, phone, address_state, birthdate, age = lib.generate_nationality()
+
             company_name_legal = f'{company_name}-{ctr}, {legal}' 
             #birthdate, age = lib.generate_age()
-            health_limit_spec, health_limit, voluntary, legal, start_date, end_date = lib.generate_health_and_date()
+            health_limit_spec, health_limit, voluntary, legal, start_date, end_date, start_date2, end_date2 = lib.generate_health_and_date()
 
             title, education = lib.generate_title_and_hierarchy()
-
+            """"
             today = datetime.now()
 
-            start_date2 = datetime(2000, 1, 1) + timedelta(days=random.randint(1, 8000))
+            start_date2 = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 3000))
             end_date2 = datetime.now() + timedelta(days=random.randint(365, 730))  # den ukončení bude 365 dní v budoucnosti
             end_date2 = max(end_date2, start_date2 + timedelta(days=30))
+            """
 
             start_date2 = start_date2.strftime('%Y-%m-%d')
             end_date2 = end_date2.strftime('%Y-%m-%d')
+            
 
             last_code_numbers[spec_company_id] += 1
 
@@ -246,7 +253,7 @@ for spec_company_id in range(1,branches+1):
 
 
             people_board.append(board_data)
-print('První sekce vygenerovaná}')
+print('Druhá sekce vygenerovaná}')
 
 
 #################################

@@ -3,10 +3,14 @@ from faker import Faker
 import random
 import library3 as lib 
 from datetime import datetime, timedelta
+import run_scripts as rs
 
-seed = 12345
-random.seed(seed)
-Faker.seed(seed)
+#seed = 12345
+#random.seed(seed)
+#Faker.seed(seed)
+
+random.seed()
+Faker.seed()
 
 
 temp_dim_dept, dim_dept, dim_pos, dim_comp, temp_dim_ppl, dim_ppl, dim_date, fact_people = lib.table_names()
@@ -39,15 +43,14 @@ END
 
 cursor.execute(create_table_query)
 
-should_update_table = True
 
-if should_update_table:
+if rs.should_rewrite_table_dimCompanyBranch == True:
     drop_table_script = f'DROP TABLE IF EXISTS {dim_comp};'
     cursor.execute(drop_table_script)
     cursor.execute(create_table_query)
     conn.commit()
 
-if should_update_table == True:
+if rs.should_rewrite_table_dimCompanyBranch == True:
     update_value = 'přepsaná. Data vypsaná znovu.'
 else:
     update_value = 'ponechaná. Data přidaná za existující.'
