@@ -105,7 +105,7 @@ for i in range(ppl):
 
     company_name_legal = f'{company_name}-{ctr}, {legal}' 
     #birthdate, age = lib.generate_age()
-    health_limit_spec, health_limit, voluntary, legal, start_date, end_date = lib.generate_health_and_date()
+    health_limit_spec, health_limit, voluntary, legal, start_date, end_date, start_date2, end_date2 = lib.generate_health_and_date()
 
     title, education = lib.generate_title_and_hierarchy()
     employment_type, employment_num = lib.generate_employment_type()
@@ -161,7 +161,7 @@ for i in range(ppl):
 
     people_person.append(person_data)
 
-print('První sekce vygenerovaná}')
+#print('První sekce vygenerovaná}')
 
 ###################################
 people_board = []
@@ -253,7 +253,8 @@ for spec_company_id in range(1,branches+1):
 
 
             people_board.append(board_data)
-print('Druhá sekce vygenerovaná}')
+
+#print('Druhá sekce vygenerovaná}')
 
 
 #################################

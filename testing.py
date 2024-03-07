@@ -1,4 +1,5 @@
 import pyodbc
+import run_scripts as rs
 
 server = 'localhost'
 database = 'HRprojekt'
@@ -8,8 +9,10 @@ cursor = conn.cursor()
 
 test_table = 'test'
 
-drop_table_script = f'DROP TABLE IF EXISTS {test_table};'
-cursor.execute(drop_table_script)
+if rs.should_rewrite_test == True:
+    drop_table_script = f'DROP TABLE IF EXISTS {test_table};'
+    cursor.execute(drop_table_script)
+
 
 create_table_query = f'''
 IF OBJECT_ID('{test_table}', 'U') IS NULL
@@ -22,7 +25,17 @@ BEGIN
 END
 '''
 cursor.execute(create_table_query)
+
+data = {'first_name': 'someone',
+        'last_name': 'someone else'}
+
+columns = ', '.join(data.keys())
+values = ', '.join([f"N'{value}'" if isinstance(value, str) else f"{value}" for value in data.values()])
+insert_data_script = f'INSERT INTO {test_table} ({columns}) VALUES ({values});'
+cursor.execute(insert_data_script)
+
 conn.commit()
+
 
 
 
