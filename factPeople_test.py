@@ -1,6 +1,6 @@
 import pyodbc
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
+#from datetime import datetime, timedelta
+#from dateutil.relativedelta import relativedelta
 import library3 as lib
 
 
@@ -20,10 +20,10 @@ print('Spojení s DB navázáno')
 tables_to_drop = [temp_dim_dept, temp_dim_ppl]
 should_drop_table = False
 
-should_dropt_and_create_table = True
+should_drop_and_create_table = True
 tables_to_update = [fact_people, dim_ppl]
 
-if should_dropt_and_create_table:
+if should_drop_and_create_table:
     for table_name in tables_to_update:
         drop_table_script = f'DROP TABLE IF EXISTS {table_name};'
         cursor.execute(drop_table_script)

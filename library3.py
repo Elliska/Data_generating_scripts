@@ -51,7 +51,7 @@ def table_names():
     return temp_dim_dept, dim_dept, dim_pos, dim_comp, temp_dim_ppl, dim_ppl, dim_date, fact_people
 
 def people_amount():
-    ppl = 1965
+    ppl = 2965
     branches = 7
     top_pos = 5
     total_pos = 136
