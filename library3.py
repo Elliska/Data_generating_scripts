@@ -51,7 +51,7 @@ def table_names():
     return temp_dim_dept, dim_dept, dim_pos, dim_comp, temp_dim_ppl, dim_ppl, dim_date, fact_people
 
 def people_amount():
-    ppl = 2965
+    ppl = 1965
     branches = 7
     top_pos = 5
     total_pos = 136
@@ -178,7 +178,7 @@ def generate_health_and_date():
 
     
     if voluntary == 'odešel':
-        legal = fake_cz.random_element(['dohodou', 'skončením smlouvy','výpovědí', 've zkušební době'])
+        legal = fake_cz.random.choices(['dohodou', 'skončením smlouvy','výpovědí', 've zkušební době'], weights=[35,30,25,10])[0]
         health_limit = random.choice(['A', 'B', 'C', 'D'])
     elif voluntary == 'odejit':
         legal = fake_cz.random_element(['dohodou', 'skončením smlouvy','výpovědí', 've zkušební době', 'okamžitým zrušením'])
@@ -205,25 +205,25 @@ def generate_health_and_date():
         # Zajistit, aby end_date nebylo před start_date
         end_date = max(end_date, start_date + timedelta(days=60))
     elif voluntary in ['odešel', 'odejit'] and legal == 've zkušební době':
-        start_date = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 2555))
+        start_date = datetime(2014, 1, 1) + timedelta(days=random.randint(1, 2555))
         min_days_of_employment = 1
         employment_duration = random.randint(min_days_of_employment, 89)
         end_date = datetime(2023, 12, 31) - timedelta(days=min_days_of_employment + random.randint(0, 1))
         end_date = start_date + timedelta(days=employment_duration)
         end_date = max(end_date, start_date + timedelta(days=7))
     else:
-        start_date = datetime(2015, 1, 1) + timedelta(days=random.randint(1, 2555))
+        start_date = datetime(2013, 1, 1) + timedelta(days=random.randint(1, 4015))
         min_days_of_employment = 365
         employment_duration = random.randint(min_days_of_employment, 1095)
         end_date = datetime.now() + timedelta(days=random.randint(60, 365))
         end_date = max(end_date, start_date + timedelta(days=60))
-    """
+        """
     else:
         end_date = datetime.now() + timedelta(days=random.randint(60, 365))
         min_days_of_employment = 365
         employment_duration = random.randint(min_days_of_employment, 2000)
         start_date = end_date - timedelta(days=employment_duration)
-    """
+        """
 
     start_date2 = datetime(2014, 1, 1) + timedelta(days=random.randint(1, 365))
     end_date2 = datetime.now() + timedelta(days=random.randint(60, 365))

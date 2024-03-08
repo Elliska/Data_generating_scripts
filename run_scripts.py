@@ -1,4 +1,4 @@
-import subprocess
+import subprocess, sys
 import pyodbc
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -28,12 +28,12 @@ should_rewrite_table_dimCompanyBranch = True
 
 should_rewrite_test = True
 
-# nejde mi změnit adresář na aktuální, clashuje to se subprocesy a u jakéhokoliv jiného postupu totéž
 #subprocess.run(['python', 'dimPeople_test.py'])
-#subprocess.run(['python','version 3/dimDepartment_test.py'])
-#subprocess.run(['python','version 3/dimDate_test.py'])
-#subprocess.run(['python','version 3/factPeople_test.py']) 
-subprocess.run(['python','C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt/Data_generating_scripts/dimPeople_test.py'])
+#subprocess.run(['python','dimDepartment_test.py'])
+#subprocess.run(['python','dimDate_test.py'])
+#subprocess.run(['python','factPeople_test.py']) 
+#subprocess.run([sys.executable,'C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt/Data_generating_scripts/dimPeople_test.py'], check=True, cwd='C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt')
+subprocess.run(['python','version 3/factPeople_test.py']) 
 
 if should_drop_table:
     for table_name in tables_to_drop:
