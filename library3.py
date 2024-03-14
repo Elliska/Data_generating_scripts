@@ -165,7 +165,7 @@ def generate_age():
 
 def generate_health_and_date():
     # zdravotní stav
-    voluntary = random.choices(['aktivní', 'odešel', 'odejit'], weights = [40,20,20])[0]
+    voluntary = random.choices(['aktivní', 'odešel', 'odejit'], weights = [60,20,20])[0]
     health_limit = random.choices(['A', 'B', 'C', 'D'], weights=[60,20,10,10])[0] # schopen, schopen s výhradou, schopen s omezením, neschopen
     health = fake_cz.random_element(health_limit)
     map_health_spec = {
@@ -285,7 +285,7 @@ def generate_nationality():
         birthdate = birthdate.strftime('%Y-%m-%d')
     ###
     #sex = random.choices(['M', 'F', 'I'], weights=[49, 49, 2])[0]
-    sex = random.choices(sex_choice, weights=[49, 49, 2])[0]   
+    sex = random.choices(sex_choice, weights=[40, 58, 2])[0]   
 
     if sex == 'M':   
         gender = random.choices(['male', 'female', 'other'], weights=[80,10,10])[0]

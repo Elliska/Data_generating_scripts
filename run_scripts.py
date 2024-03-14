@@ -32,8 +32,8 @@ should_rewrite_test = True
 #subprocess.run(['python','dimDepartment_test.py'])
 #subprocess.run(['python','dimDate_test.py'])
 #subprocess.run(['python','factPeople_test.py']) 
-#subprocess.run([sys.executable,'C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt/Data_generating_scripts/dimPeople_test.py'], check=True, cwd='C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt')
-subprocess.run(['python','version 3/factPeople_test.py']) 
+subprocess.run([sys.executable,'C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt/Data_generating_scripts/dimPeople_test.py'], check=True, cwd='C:/Users/michaela.maleckova/OneDrive - Seyfor/Projekt')
+#subprocess.run(['python','version 3/factPeople_test.py']) 
 
 if should_drop_table:
     for table_name in tables_to_drop:
